@@ -41,7 +41,10 @@ export function useRecipes() {
     const map = new Map<string, RecipeEntry>()
     for (const r of remote) map.set(r.id, { recipe: r, origin: 'remote' })
     for (const r of local) map.set(r.id, { recipe: r, origin: 'local' }) // 同 id はローカル優先
-    return [...map.values()].sort((a, b) => (b.recipe.date ?? '').localeCompare(a.recipe.date ?? ''))
+    // id の数字順 (B-1, B-1a, B-2, B-4 …)
+    return [...map.values()].sort((a, b) =>
+      a.recipe.id.localeCompare(b.recipe.id, 'ja', { numeric: true, sensitivity: 'base' }),
+    )
   }, [remote, local])
 
   const importRecipes = useCallback((recipes: Recipe[]) => {

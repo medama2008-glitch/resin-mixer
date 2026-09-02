@@ -33,7 +33,7 @@ describe('buildSteps (受け入れ確認 2)', () => {
   })
   it('Step 3: 主剤合流', () => {
     expect(steps[2].text).toBe(
-      'L-6206 66.3 g（40-50℃加温済み）に Step 2 の液を全量注ぎ、ヘラで壁面をこそぎながら混合',
+      'L-6206 66.3 g（40-50℃加温済み）にモノマーカクテルの液を全量注ぎ、ヘラで壁面をこそぎながら混合',
     )
   })
   it('カクテル容器の累計が付く', () => {
@@ -53,7 +53,7 @@ describe('buildSteps: 複数オリゴマーのブレンド', () => {
   }
   it('主剤合流に追加成分が並ぶ', () => {
     const steps = buildSteps(r, calcFromBase(r, 61))
-    expect(steps[2].text).toContain('L-6206 61.0 g（40-50℃加温済み）に Step 2 の液を全量注ぎ')
+    expect(steps[2].text).toContain('L-6206 61.0 g（40-50℃加温済み）にモノマーカクテルの液を全量注ぎ')
     expect(steps[2].text).toContain('さらに L-9999 10.0 g を追加して撹拌')
   })
 })

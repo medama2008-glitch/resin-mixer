@@ -501,6 +501,66 @@ main {
   border-left-color: var(--warn);
 }
 
+.step-card.kind-prep,
+.step-card.kind-measure,
+.step-card.kind-adjust {
+  border-left-color: var(--muted);
+}
+
+.step-card.kind-measure {
+  border-left-color: var(--warn);
+}
+
+.card-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.range-line {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.range-line strong {
+  color: var(--text);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.remove-line {
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.remove-line.warn {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.remove-line .big {
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.field-row {
+  display: flex;
+  gap: 10px;
+}
+
+.field-row .field {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-row .field-narrow {
+  flex: 0 0 34%;
+}
+
 .step-card.kind-print {
   border-left-color: var(--muted);
 }
