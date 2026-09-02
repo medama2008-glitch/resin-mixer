@@ -1,5 +1,7 @@
 # ResinMixer
 
+公開 URL: https://medama2008-glitch.github.io/resin-mixer/
+
 光造形用 UV レジンを原料から自家配合するための計算・手順表示アプリ (PWA)。
 サーバーなし、`public/recipes.json` をレシピ台帳として GitHub Pages で配信する。
 
@@ -12,7 +14,7 @@
 ## セットアップ (初回)
 
 ```bash
-git clone https://github.com/<user>/resin-mixer.git
+git clone https://github.com/medama2008-glitch/resin-mixer.git
 cd resin-mixer
 npm install
 npm run dev        # http://localhost:5173/
@@ -75,12 +77,12 @@ push せずにその端末だけで使える (「ローカル」バッジ付き�
 
 1. GitHub でリポジトリ `resin-mixer` を作成し、このディレクトリを push
    ```bash
-   git remote add origin https://github.com/<user>/resin-mixer.git
+   git remote add origin https://github.com/medama2008-glitch/resin-mixer.git
    git push -u origin main
    ```
 2. リポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にする
 3. `main` に push すると `.github/workflows/deploy.yml` が走り、
-   `https://<user>.github.io/resin-mixer/` で公開される
+   `https://medama2008-glitch.github.io/resin-mixer/` で公開される
 4. スマホでその URL を開き、「ホーム画面に追加」
 
 リポジトリ名を変えた場合も、ワークフローがリポジトリ名から自動で base パスを決めるので設定変更は不要。
@@ -89,7 +91,7 @@ push せずにその端末だけで使える (「ローカル」バッジ付き�
 ## 2 台目 PC のセットアップ
 
 ```bash
-git clone https://github.com/<user>/resin-mixer.git
+git clone https://github.com/medama2008-glitch/resin-mixer.git
 cd resin-mixer
 npm install
 npm run dev
