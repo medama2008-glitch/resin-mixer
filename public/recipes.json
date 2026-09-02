@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "id": "B-2",
+      "status": "active",
+      "date": "2026-09-01",
+      "base_component": "L-6206",
+      "components": [
+        {"name": "L-6206",    "ratio": 61.0, "role": "oligomer",    "step": 3},
+        {"name": "ACMO",      "ratio": 20.0, "role": "diluent",     "step": 1},
+        {"name": "BAPO",      "ratio": 1.0,  "role": "initiator",   "step": 1, "note": "ACMO全量に溶解。30-40℃加温、完全透明まで撹拌"},
+        {"name": "EO3-TMPTA", "ratio": 13.0, "role": "crosslinker", "step": 2},
+        {"name": "L-6105",    "ratio": 4.7,  "role": "diluent",     "step": 2},
+        {"name": "顔料(緑)",   "ratio": 0.3,  "role": "blocker",     "step": 2}
+      ],
+      "print_profile": {
+        "exposure_s": 6.0,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 40,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2.0
+      },
+      "notes": "膜なし・BAPO完全溶解条件で0.6mm柱まで生存"
+    }
+  ]
+}
