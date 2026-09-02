@@ -27,6 +27,11 @@ npm run dev        # http://localhost:5173/
 
 スマホから開発中の画面を見るには `npm run dev -- --host` で LAN 公開する。
 
+**OneDrive 配下で開発する場合の注意**: Node 24 は OneDrive 同期フォルダ内のファイル削除で
+ネイティブクラッシュする (終了コード 0xC0000409、メッセージなし)。Vite の `emptyOutDir` もこれで落ちるため、
+`npm run build` は先に `scripts/clean.mjs` (OS の rmdir を使う) で `dist` を消してからビルドする。
+`vite build` を直接叩く場合は先に `npm run clean` を実行すること。
+
 ## レシピの更新手順
 
 1. チャット (Claude) で確定したレシピを `schema_version: 1` の JSON で受け取る

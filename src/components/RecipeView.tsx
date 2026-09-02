@@ -15,7 +15,15 @@ export function RecipeView({ recipe, isLocal }: Props) {
   const [tab, setTab] = useState<Tab>('calc')
   const [targetText, setTargetText] = useState('100')
   const [measuredText, setMeasuredText] = useState('')
-  const [checked, setChecked] = useState<Record<number, boolean>>({})
+  // 材料ごとのチェック。キーは `${step}:${name}`。step のチェックは全材料チェック済みで自動的に入る
+  const [checked, setChecked] = useState<Record<string, boolean>>({})
+  const itemKey = (step: number, name: string) => `${step}:${name}`
+  const setStepAll = (step: number, names: string[], value: boolean) =>
+    setChecked((c) => {
+      const next = { ...c }
+      for (const n of names) next[itemKey(step, n)] = value
+      return next
+    })
 
   const base = findBase(recipe)
   const target = parseDecimal(targetText)
@@ -139,30 +147,50 @@ export function RecipeView({ recipe, isLocal }: Props) {
       ) : (
         <div className="steps">
           {steps.map((s) => {
-            const done = !!checked[s.step]
+            const names = s.items.map((it) => it.component.name)
+            const doneCount = names.filter((n) => checked[itemKey(s.step, n)]).length
+            const done = doneCount === names.length
             return (
               <div key={s.step} className={`card step-card kind-${s.kind} ${done ? 'done' : ''}`}>
                 <label className="step-head">
                   <input
                     type="checkbox"
                     checked={done}
-                    onChange={(e) => setChecked((c) => ({ ...c, [s.step]: e.target.checked }))}
+                    ref={(el) => {
+                      if (el) el.indeterminate = !done && doneCount > 0
+                    }}
+                    onChange={(e) => setStepAll(s.step, names, e.target.checked)}
                   />
                   <span className="step-no">Step {s.step}</span>
                   <span className="step-title">{s.title}</span>
+                  <span className="step-progress">
+                    {doneCount}/{names.length}
+                  </span>
                 </label>
                 <p className="step-text">{s.text}</p>
                 <ul className="step-items">
-                  {s.items.map((it) => (
-                    <li key={it.component.name}>
-                      <span className="comp-name">{it.component.name}</span>
-                      <span className="comp-role">{roleLabel(it.component.role)}</span>
-                      <span className="grams">{fmtGrams(it.grams)} g</span>
-                      {it.cumulative !== undefined && s.items.length > 1 && (
-                        <span className="cumulative">累計 {fmtGrams(it.cumulative)}</span>
-                      )}
-                    </li>
-                  ))}
+                  {s.items.map((it) => {
+                    const key = itemKey(s.step, it.component.name)
+                    const itemDone = !!checked[key]
+                    return (
+                      <li key={it.component.name} className={itemDone ? 'done' : ''}>
+                        <label className="item-check">
+                          <input
+                            type="checkbox"
+                            checked={itemDone}
+                            onChange={(e) => setChecked((c) => ({ ...c, [key]: e.target.checked }))}
+                            aria-label={`${it.component.name} を投入済み`}
+                          />
+                        </label>
+                        <span className="comp-name">{it.component.name}</span>
+                        <span className="comp-role">{roleLabel(it.component.role)}</span>
+                        <span className="grams">{fmtGrams(it.grams)} g</span>
+                        {it.cumulative !== undefined && s.items.length > 1 && (
+                          <span className="cumulative">累計 {fmtGrams(it.cumulative)}</span>
+                        )}
+                      </li>
+                    )
+                  })}
                 </ul>
                 {s.notes.length > 0 && (
                   <ul className="step-notes">

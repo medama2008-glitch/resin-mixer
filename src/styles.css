@@ -556,14 +556,46 @@ main {
 
 .step-items li {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
   grid-template-areas:
-    'name grams'
-    'role cum';
+    'check name grams'
+    'check role cum';
   align-items: baseline;
   column-gap: 12px;
-  padding: 8px 0;
+  padding: 4px 0;
   border-top: 1px solid var(--border);
+}
+
+.step-items li.done .comp-name,
+.step-items li.done .grams {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.step-items .item-check {
+  grid-area: check;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -8px;
+  cursor: pointer;
+}
+
+.step-items .item-check input[type='checkbox'] {
+  width: 26px;
+  height: 26px;
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.step-progress {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .step-items .comp-name {
