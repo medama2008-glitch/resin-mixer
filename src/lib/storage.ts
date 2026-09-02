@@ -51,6 +51,17 @@ export function saveMarginPct(pct: number) {
   write(MARGIN_KEY, pct)
 }
 
+const RESOLUTION_KEY = 'resinmixer.gramResolution'
+
+/** 表示単位。既定は 0.1 g (coarse) */
+export function loadResolution(): 'coarse' | 'fine' {
+  return read<string>(RESOLUTION_KEY, 'coarse') === 'fine' ? 'fine' : 'coarse'
+}
+
+export function saveResolution(r: 'coarse' | 'fine') {
+  write(RESOLUTION_KEY, r)
+}
+
 export type ThemePref = 'auto' | 'light' | 'dark'
 
 export function loadTheme(): ThemePref {

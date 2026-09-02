@@ -51,11 +51,24 @@ export function calcFromBase(recipe: Recipe, measuredBaseGrams: number): Calcula
 }
 
 /**
- * 表示用フォーマット。10g 以上は小数1桁、10g 未満は小数2桁
- * (BAPO や顔料など微量成分は 1 桁では粗すぎるため)。
+ * 質量の表示単位。はかりの最小表示に合わせる。
+ * - coarse: 常に 0.1 g (小数1桁)
+ * - fine:   10 g 以上は小数1桁、10 g 未満は 0.01 g (小数2桁)
  */
+export type GramResolution = 'coarse' | 'fine'
+let gramResolution: GramResolution = 'fine'
+
+export function setGramResolution(r: GramResolution) {
+  gramResolution = r
+}
+
+export function getGramResolution(): GramResolution {
+  return gramResolution
+}
+
 export function fmtGrams(g: number): string {
   if (!Number.isFinite(g)) return '–'
+  if (gramResolution === 'coarse') return g.toFixed(1)
   return Math.abs(g) >= 10 ? g.toFixed(1) : g.toFixed(2)
 }
 

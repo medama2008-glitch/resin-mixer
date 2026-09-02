@@ -1,13 +1,23 @@
 import { useMemo, useState } from 'react'
 import type { Recipe } from '../types'
 import { PRINT_PROFILE_LABEL, STATUS_LABEL, roleLabel } from '../types'
-import { calcFromBase, calcFromTarget, findBase, fmtGrams, fmtNum, parseDecimal } from '../lib/calc'
+import {
+  calcFromBase,
+  calcFromTarget,
+  findBase,
+  fmtGrams,
+  fmtNum,
+  parseDecimal,
+  type GramResolution,
+} from '../lib/calc'
 import { buildWorkflow, type WorkflowCard } from '../lib/workflow'
 import { loadMarginPct, saveMarginPct } from '../lib/storage'
 
 interface Props {
   recipe: Recipe
   isLocal: boolean
+  resolution: GramResolution
+  onResolutionChange: (r: GramResolution) => void
 }
 
 type Tab = 'calc' | 'steps'
@@ -42,7 +52,7 @@ function NumInput({
   )
 }
 
-export function RecipeView({ recipe, isLocal }: Props) {
+export function RecipeView({ recipe, isLocal, resolution, onResolutionChange }: Props) {
   const [tab, setTab] = useState<Tab>('calc')
   const [targetText, setTargetText] = useState('100')
   const [measuredText, setMeasuredText] = useState('')
@@ -71,7 +81,9 @@ export function RecipeView({ recipe, isLocal }: Props) {
         margin,
         premixActual,
       }),
-    [recipe, target, usingMeasured, measured, margin, premixActual],
+    // resolution は文言中の数値の丸めに効くので依存に含める
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [recipe, target, usingMeasured, measured, margin, premixActual, resolution],
   )
   const plannedBase = base && target ? calcFromTarget(recipe, target).amounts.find((a) => a.isBase)?.grams : undefined
 
@@ -159,6 +171,24 @@ export function RecipeView({ recipe, isLocal }: Props) {
             倍率 <strong>{fmtNum(calc.scale, 3)}</strong> g/比
           </span>
           {usingMeasured && <span className="badge badge-measured">実測基準</span>}
+          <div className="seg" role="group" aria-label="表示単位">
+            <button
+              type="button"
+              className="seg-btn"
+              aria-pressed={resolution === 'coarse'}
+              onClick={() => onResolutionChange('coarse')}
+            >
+              0.1 g
+            </button>
+            <button
+              type="button"
+              className="seg-btn"
+              aria-pressed={resolution === 'fine'}
+              onClick={() => onResolutionChange('fine')}
+            >
+              0.01 g
+            </button>
+          </div>
         </div>
       </div>
 

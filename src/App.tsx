@@ -3,7 +3,8 @@ import { useRecipes } from './useRecipes'
 import { RecipeList } from './components/RecipeList'
 import { RecipeView } from './components/RecipeView'
 import { ImportView } from './components/ImportView'
-import { loadTheme, saveTheme, type ThemePref } from './lib/storage'
+import { loadResolution, loadTheme, saveResolution, saveTheme, type ThemePref } from './lib/storage'
+import { setGramResolution, type GramResolution } from './lib/calc'
 
 type Route = { view: 'list' } | { view: 'recipe'; id: string } | { view: 'import' }
 
@@ -38,8 +39,19 @@ export default function App() {
   const route = useHashRoute()
   const { entries, local, remoteState, refresh, importRecipes, removeLocal } = useRecipes()
   const [theme, setTheme] = useState<ThemePref>(() => loadTheme())
+  const [resolution, setResolution] = useState<GramResolution>(() => {
+    const r = loadResolution()
+    setGramResolution(r)
+    return r
+  })
 
   useEffect(() => applyTheme(theme), [theme])
+
+  const changeResolution = (r: GramResolution) => {
+    setGramResolution(r)
+    saveResolution(r)
+    setResolution(r)
+  }
 
   const cycleTheme = () => {
     const next = THEME_NEXT[theme]
@@ -53,7 +65,13 @@ export default function App() {
     const entry = entries.find((e) => e.recipe.id === route.id)
     title = route.id
     body = entry ? (
-      <RecipeView key={entry.recipe.id + entry.origin} recipe={entry.recipe} isLocal={entry.origin === 'local'} />
+      <RecipeView
+        key={entry.recipe.id + entry.origin}
+        recipe={entry.recipe}
+        isLocal={entry.origin === 'local'}
+        resolution={resolution}
+        onResolutionChange={changeResolution}
+      />
     ) : (
       <div className="page">
         <p className="empty">

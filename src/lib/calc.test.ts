@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Recipe } from '../types'
-import { calcFromBase, calcFromTarget, fmtGrams, parseDecimal } from './calc'
+import { calcFromBase, calcFromTarget, fmtGrams, parseDecimal, setGramResolution } from './calc'
 
 const B2: Recipe = {
   id: 'B-2',
@@ -46,6 +46,18 @@ describe('calcFromBase (受け入れ確認 1)', () => {
     expect(fmtGrams(g(c, '顔料(緑)'))).toBe('0.33')
     expect(fmtGrams(g(c, 'L-6206'))).toBe('66.3')
     expect(c.scale).toBeCloseTo(66.3 / 61, 9)
+  })
+})
+
+describe('fmtGrams の表示単位', () => {
+  it('coarse は常に 0.1 g、fine は 10 g 未満のみ 0.01 g', () => {
+    setGramResolution('coarse')
+    expect(fmtGrams(1.087)).toBe('1.1')
+    expect(fmtGrams(0.326)).toBe('0.3')
+    expect(fmtGrams(21.74)).toBe('21.7')
+    setGramResolution('fine')
+    expect(fmtGrams(1.087)).toBe('1.09')
+    expect(fmtGrams(21.74)).toBe('21.7')
   })
 })
 
