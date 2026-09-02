@@ -7,21 +7,43 @@
       "date": "2026-09-01",
       "base_component": "L-6206",
       "components": [
-        {"name": "L-6206",    "ratio": 61.0, "role": "oligomer",    "step": 3},
-        {"name": "ACMO",      "ratio": 20.0, "role": "diluent",     "step": 1},
-        {"name": "BAPO",      "ratio": 1.0,  "role": "initiator",   "step": 1, "note": "ACMO全量に溶解。30-40℃加温、完全透明まで撹拌"},
+        {"name": "L-6206", "ratio": 61.0, "role": "oligomer", "step": 3, "note": "40-50℃に加温してから合流。皮膚感作性あり素手厳禁"},
+        {"name": "ACMO", "ratio": 20.0, "role": "diluent", "step": 1, "note": "開封後は即密栓(吸湿性)"},
+        {"name": "BAPO", "ratio": 1.0, "role": "initiator", "step": 1, "note": "少量ずつ振り入れ。30-40℃加温+スターラーで完全透明まで。ダマは茶こしで濾過"},
         {"name": "EO3-TMPTA", "ratio": 13.0, "role": "crosslinker", "step": 2},
-        {"name": "L-6105",    "ratio": 4.7,  "role": "diluent",     "step": 2},
-        {"name": "顔料(緑)",   "ratio": 0.3,  "role": "blocker",     "step": 2}
+        {"name": "L-6105", "ratio": 4.7, "role": "diluent", "step": 2},
+        {"name": "顔料(緑)", "ratio": 0.3, "role": "blocker", "step": 2, "note": "ホルベイン アクリリックインク。0.5g/100g超は水分過多になるので不可"}
       ],
       "print_profile": {
+        "layer_mm": 0.05,
         "exposure_s": 6.0,
         "bottom_layers": 3,
         "bottom_exposure_s": 40,
-        "layer_mm": 0.05,
         "rest_after_retract_s": 2.0
       },
-      "notes": "膜なし・BAPO完全溶解条件で0.6mm柱まで生存"
+      "notes": "現行基準。膜なし・BAPO完全溶解・Z補正後条件で0.6mm柱生存。液深3mm以上で印刷開始"
+    },
+    {
+      "id": "B-4",
+      "status": "experimental",
+      "date": "2026-09-02",
+      "base_component": "L-6206",
+      "components": [
+        {"name": "L-6206", "ratio": 58.0, "role": "oligomer", "step": 3, "note": "40-50℃に加温してから合流"},
+        {"name": "ACMO", "ratio": 18.0, "role": "diluent", "step": 1},
+        {"name": "BAPO", "ratio": 1.0, "role": "initiator", "step": 1, "note": "ACMO全量に完全溶解させる"},
+        {"name": "EO3-TMPTA", "ratio": 13.0, "role": "crosslinker", "step": 2},
+        {"name": "L-6105", "ratio": 9.7, "role": "diluent", "step": 2},
+        {"name": "顔料(緑)", "ratio": 0.3, "role": "blocker", "step": 2}
+      ],
+      "print_profile": {
+        "layer_mm": 0.05,
+        "exposure_s": 6.0,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 40,
+        "rest_after_retract_s": 2.0
+      },
+      "notes": "L-6105ルート検証。ACMOをB-1水準(18)に戻しL-6105増で粘度低下と延性維持の両立を狙う。B-2と同条件で強度比較すること"
     }
   ]
 }
