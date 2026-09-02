@@ -7,19 +7,53 @@
       "date": "2026-09-01",
       "base_component": "L-6206",
       "components": [
-        {"name": "L-6206", "ratio": 61.0, "role": "oligomer", "step": 3, "note": "40-50℃に加温してから合流。皮膚感作性あり素手厳禁"},
-        {"name": "ACMO", "ratio": 20.0, "role": "diluent", "step": 1, "note": "開封後は即密栓(吸湿性)"},
-        {"name": "BAPO", "ratio": 1.0, "role": "initiator", "step": 1, "note": "少量ずつ振り入れ。30-40℃加温+スターラーで完全透明まで。ダマは茶こしで濾過"},
-        {"name": "EO3-TMPTA", "ratio": 13.0, "role": "crosslinker", "step": 2},
-        {"name": "L-6105", "ratio": 4.7, "role": "diluent", "step": 2},
-        {"name": "顔料(緑)", "ratio": 0.3, "role": "blocker", "step": 2, "note": "ホルベイン アクリリックインク。0.5g/100g超は水分過多になるので不可"}
+        {
+          "name": "L-6206",
+          "ratio": 61,
+          "role": "oligomer",
+          "step": 3,
+          "note": "40-50℃に加温してから合流。皮膚感作性あり素手厳禁"
+        },
+        {
+          "name": "ACMO",
+          "ratio": 20,
+          "role": "diluent",
+          "step": 1,
+          "note": "開封後は即密栓(吸湿性)"
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "少量ずつ振り入れ。30-40℃加温+スターラーで完全透明まで。ダマは茶こしで濾過"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 4.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "ホルベイン アクリリックインク。0.5g/100g超は水分過多になるので不可"
+        }
       ],
       "print_profile": {
         "layer_mm": 0.05,
-        "exposure_s": 6.0,
+        "exposure_s": 6,
         "bottom_layers": 3,
         "bottom_exposure_s": 40,
-        "rest_after_retract_s": 2.0
+        "rest_after_retract_s": 2
       },
       "notes": "現行基準。膜なし・BAPO完全溶解・Z補正後条件で0.6mm柱生存。液深3mm以上で印刷開始"
     },
@@ -29,21 +63,154 @@
       "date": "2026-09-02",
       "base_component": "L-6206",
       "components": [
-        {"name": "L-6206", "ratio": 58.0, "role": "oligomer", "step": 3, "note": "40-50℃に加温してから合流"},
-        {"name": "ACMO", "ratio": 18.0, "role": "diluent", "step": 1},
-        {"name": "BAPO", "ratio": 1.0, "role": "initiator", "step": 1, "note": "ACMO全量に完全溶解させる"},
-        {"name": "EO3-TMPTA", "ratio": 13.0, "role": "crosslinker", "step": 2},
-        {"name": "L-6105", "ratio": 9.7, "role": "diluent", "step": 2},
-        {"name": "顔料(緑)", "ratio": 0.3, "role": "blocker", "step": 2}
+        {
+          "name": "L-6206",
+          "ratio": 58,
+          "role": "oligomer",
+          "step": 3,
+          "note": "40-50℃に加温してから合流"
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に完全溶解させる"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 9.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2
+        }
       ],
       "print_profile": {
         "layer_mm": 0.05,
-        "exposure_s": 6.0,
+        "exposure_s": 6,
         "bottom_layers": 3,
         "bottom_exposure_s": 40,
-        "rest_after_retract_s": 2.0
+        "rest_after_retract_s": 2
       },
       "notes": "L-6105ルート検証。ACMOをB-1水準(18)に戻しL-6105増で粘度低下と延性維持の両立を狙う。B-2と同条件で強度比較すること"
+    },
+    {
+      "id": "B-1a",
+      "status": "experimental",
+      "date": "2026-09-02",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 63,
+          "role": "oligomer",
+          "step": 3,
+          "note": "40-50℃に加温してから合流。皮膚感作性あり素手厳禁"
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1,
+          "note": "開封後は即密栓(吸湿性)"
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "少量ずつ振り入れ。30-40℃加温+スターラーで完全透明まで"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 4.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "ホルベイン アクリリックインク。0.5g/100g超は不可"
+        }
+      ],
+      "print_profile": {
+        "layer_mm": 0.05,
+        "exposure_s": 6,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 40,
+        "rest_after_retract_s": 2
+      },
+      "notes": "B-1の緑仕様再現版。オリジナル(青)の比率そのまま、色のみ緑0.3に変更。B-2/B-4との延性比較用"
+    },
+    {
+      "id": "B-1",
+      "status": "archived",
+      "date": "2026-08-30",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 63,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 4.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(青)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2
+        }
+      ],
+      "notes": "初代(青)。グリーン状態で高延性を確認(2.34/2.50/3.05kg)。撹拌不足の可能性があるためB-1aで再現検証。歴史的記録として保存"
     }
   ]
 }
