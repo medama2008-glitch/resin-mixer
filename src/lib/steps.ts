@@ -62,14 +62,17 @@ export function buildSteps(recipe: Recipe, calc: Calculation): StepCard[] {
     const others = items.filter((it) => it.component.role !== 'initiator')
 
     if (isMerge) {
-      const bases = items.filter((it) => it.component.name === recipe.base_component)
-      const extras = items.filter((it) => it.component.name !== recipe.base_component)
+      // 合流工程のオリゴマーは主剤と一緒に加温済みとして扱う (複数オリゴマーのブレンド)
+      const isWarmed = (it: StepItem) =>
+        it.component.name === recipe.base_component || it.component.role === 'oligomer'
+      const bases = items.filter(isWarmed)
+      const extras = items.filter((it) => !isWarmed(it))
       let text = `${joinPlus(bases)}（40-50℃加温済み）`
       const prevTitle = cards.length > 0 ? cards[cards.length - 1].title : undefined
       text +=
         prevCocktailStep === undefined
           ? 'を容器に取る'
-          : `に${prevTitle}の液を全量注ぎ、ヘラで壁面をこそぎながら混合`
+          : `に${prevTitle === '計量' ? '計量した液' : `${prevTitle}の液`}を全量注ぎ、ヘラで壁面をこそぎながら混合`
       if (extras.length > 0) text += `。さらに ${joinArrow(extras)} を追加して撹拌`
       cards.push({ step, title: '主剤合流', text, items: [...bases, ...extras], notes, kind: 'merge' })
       continue

@@ -83,12 +83,20 @@ export function buildWorkflow(recipe: Recipe, opts: WorkflowOptions): WorkflowCa
 
   const cards: WorkflowCard[] = []
 
+  // 合流工程にある他のオリゴマーも一緒に湯煎する
+  const coWarmed = planSteps[mergeIdx].items.filter(
+    (it) => it.component.name !== base.name && it.component.role === 'oligomer',
+  )
+  let prepText = `${base.name} を ${fmtGrams(upper)} g 以上小分けして湯煎 (40-50℃)。目安 ${fmtGrams(basePlan)} g`
+  if (coWarmed.length > 0) {
+    prepText += `。${coWarmed.map((it) => `${it.component.name}（目安 ${fmtGrams(it.grams)} g）`).join('、')} も一緒に湯煎`
+  }
   cards.push({
     key: 'prep',
     title: '準備',
-    text: `${base.name} を ${fmtGrams(upper)} g 以上小分けして湯煎 (40-50℃)。目安 ${fmtGrams(basePlan)} g`,
+    text: prepText,
     items: [],
-    notes: [],
+    notes: coWarmed.filter((it) => it.component.note).map((it) => `${it.component.name}: ${it.component.note}`),
     kind: 'prep',
   })
 

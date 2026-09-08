@@ -51,9 +51,18 @@ describe('buildSteps: 複数オリゴマーのブレンド', () => {
       { name: 'L-9999', ratio: 10, role: 'oligomer', step: 3 },
     ],
   }
-  it('主剤合流に追加成分が並ぶ', () => {
+  it('合流工程のオリゴマーは主剤と一緒に加温済み扱い', () => {
     const steps = buildSteps(r, calcFromBase(r, 61))
-    expect(steps[2].text).toContain('L-6206 61.0 g（40-50℃加温済み）にモノマーカクテルの液を全量注ぎ')
-    expect(steps[2].text).toContain('さらに L-9999 10.0 g を追加して撹拌')
+    expect(steps[2].text).toBe(
+      'L-6206 61.0 g + L-9999 10.0 g（40-50℃加温済み）にモノマーカクテルの液を全量注ぎ、ヘラで壁面をこそぎながら混合',
+    )
+  })
+  it('合流工程のオリゴマー以外は「さらに追加」', () => {
+    const r2: Recipe = {
+      ...B2,
+      components: [...B2.components, { name: '添加剤X', ratio: 1, role: 'additive', step: 3 }],
+    }
+    const steps = buildSteps(r2, calcFromBase(r2, 61))
+    expect(steps[2].text).toContain('さらに 添加剤X 1.00 g を追加して撹拌')
   })
 })

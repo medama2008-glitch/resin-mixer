@@ -2,8 +2,62 @@
   "schema_version": 1,
   "recipes": [
     {
-      "id": "B-2",
+      "id": "B-4",
       "status": "active",
+      "date": "2026-09-05",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 58,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解。30-40℃加温、少量ずつ投入、完全透明まで撹拌"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 9.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "ホルベイン アクリリックインク"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": 6,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 40,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2
+      },
+      "notes": "第一部主力。φ4曲げ6.23kg生存(SKタフ3-4kg、Elegoo1.6kg)。柱4本・凹み良好。粘度高め"
+    },
+    {
+      "id": "B-2",
+      "status": "archived",
       "date": "2026-09-01",
       "base_component": "L-6206",
       "components": [
@@ -11,22 +65,20 @@
           "name": "L-6206",
           "ratio": 61,
           "role": "oligomer",
-          "step": 3,
-          "note": "40-50℃に加温してから合流。皮膚感作性あり素手厳禁"
+          "step": 3
         },
         {
           "name": "ACMO",
           "ratio": 20,
           "role": "diluent",
-          "step": 1,
-          "note": "開封後は即密栓(吸湿性)"
+          "step": 1
         },
         {
           "name": "BAPO",
           "ratio": 1,
           "role": "initiator",
           "step": 1,
-          "note": "少量ずつ振り入れ。30-40℃加温+スターラーで完全透明まで。ダマは茶こしで濾過"
+          "note": "ACMO全量に溶解"
         },
         {
           "name": "EO3-TMPTA",
@@ -44,31 +96,29 @@
           "name": "顔料(緑)",
           "ratio": 0.3,
           "role": "blocker",
-          "step": 2,
-          "note": "ホルベイン アクリリックインク。0.5g/100g超は水分過多になるので不可"
+          "step": 2
         }
       ],
       "print_profile": {
-        "layer_mm": 0.05,
         "exposure_s": 6,
         "bottom_layers": 3,
         "bottom_exposure_s": 40,
+        "layer_mm": 0.05,
         "rest_after_retract_s": 2
       },
-      "notes": "現行基準。膜なし・BAPO完全溶解・Z補正後条件で0.6mm柱生存。液深3mm以上で印刷開始"
+      "notes": "φ4 5.80kg生存。B-4と判別不能。ACMO増で延性やや低の疑い"
     },
     {
-      "id": "B-4",
-      "status": "experimental",
-      "date": "2026-09-02",
+      "id": "B-1'",
+      "status": "archived",
+      "date": "2026-09-01",
       "base_component": "L-6206",
       "components": [
         {
           "name": "L-6206",
-          "ratio": 58,
+          "ratio": 63,
           "role": "oligomer",
-          "step": 3,
-          "note": "40-50℃に加温してから合流"
+          "step": 3
         },
         {
           "name": "ACMO",
@@ -81,7 +131,173 @@
           "ratio": 1,
           "role": "initiator",
           "step": 1,
-          "note": "ACMO全量に完全溶解させる"
+          "note": "ACMO全量に溶解"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 4.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2
+        }
+      ],
+      "print_profile": {
+        "exposure_s": 6,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 40,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2
+      },
+      "notes": "基準レシピ。φ4 4.48kg破断(B系で唯一破断値取得)。サポート立ちにくい傾向"
+    },
+    {
+      "id": "B-4L",
+      "status": "experimental",
+      "date": "2026-09-08",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 45,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 22.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2
+        }
+      ],
+      "print_profile": {
+        "exposure_s": 6,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 40,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 1.5
+      },
+      "notes": "低粘度化(L-6105路線)。狙い粘度半減。延性↑剛性↓予想。評価: ヘラ垂れ・洗浄性・二つ折り・v3・ノッチ破断"
+    },
+    {
+      "id": "B-4F",
+      "status": "experimental",
+      "date": "2026-09-08",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 58,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 2,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解。量が倍なので溶解に時間をかける"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2
+        }
+      ],
+      "print_profile": {
+        "exposure_s": 3,
+        "bottom_layers": 3,
+        "bottom_exposure_s": 25,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2
+      },
+      "notes": "高速印刷(BAPO 2%)。露光3s目標。v3で柱・凹みを確認、太りと黄変に注意"
+    },
+    {
+      "id": "B-6",
+      "status": "experimental",
+      "date": "2026-09-08",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 51,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6290D",
+          "ratio": 7,
+          "role": "oligomer",
+          "step": 3,
+          "note": "衝撃改質(ゴム相)。L-6206と一緒に湯煎で加温してから合流"
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解"
         },
         {
           "name": "EO3-TMPTA",
@@ -103,69 +319,57 @@
         }
       ],
       "print_profile": {
-        "layer_mm": 0.05,
         "exposure_s": 6,
         "bottom_layers": 3,
         "bottom_exposure_s": 40,
+        "layer_mm": 0.05,
         "rest_after_retract_s": 2
       },
-      "notes": "L-6105ルート検証。ACMOをB-1水準(18)に戻しL-6105増で粘度低下と延性維持の両立を狙う。B-2と同条件で強度比較すること"
+      "notes": "衝撃改質(6290D 7%)。冷凍庫Tgテストで6290Dの適性確認後に実施。評価は落下試験が本命。15%版も検討"
     },
     {
-      "id": "B-1a",
+      "id": "TG-6206",
       "status": "experimental",
-      "date": "2026-09-02",
+      "date": "2026-09-08",
       "base_component": "L-6206",
       "components": [
         {
           "name": "L-6206",
-          "ratio": 63,
+          "ratio": 99,
           "role": "oligomer",
-          "step": 3,
-          "note": "40-50℃に加温してから合流。皮膚感作性あり素手厳禁"
-        },
-        {
-          "name": "ACMO",
-          "ratio": 18,
-          "role": "diluent",
-          "step": 1,
-          "note": "開封後は即密栓(吸湿性)"
+          "step": 2
         },
         {
           "name": "BAPO",
           "ratio": 1,
           "role": "initiator",
           "step": 1,
-          "note": "少量ずつ振り入れ。30-40℃加温+スターラーで完全透明まで"
-        },
-        {
-          "name": "EO3-TMPTA",
-          "ratio": 13,
-          "role": "crosslinker",
-          "step": 2
-        },
-        {
-          "name": "L-6105",
-          "ratio": 4.7,
-          "role": "diluent",
-          "step": 2
-        },
-        {
-          "name": "顔料(緑)",
-          "ratio": 0.3,
-          "role": "blocker",
-          "step": 2,
-          "note": "ホルベイン アクリリックインク。0.5g/100g超は不可"
+          "note": "IPA数滴で溶いてから湯煎した6206に混ぜる(ACMOなしで溶けにくい)"
         }
       ],
-      "print_profile": {
-        "layer_mm": 0.05,
-        "exposure_s": 6,
-        "bottom_layers": 3,
-        "bottom_exposure_s": 40,
-        "rest_after_retract_s": 2
-      },
-      "notes": "B-1の緑仕様再現版。オリジナル(青)の比率そのまま、色のみ緑0.3に変更。B-2/B-4との延性比較用"
+      "notes": "Tg判定用型流し試験片(短冊5x30x2mm、フィルム密着硬化15分×両面)。冷凍庫-18℃/40/50/60℃で曲げ"
+    },
+    {
+      "id": "TG-6290D",
+      "status": "experimental",
+      "date": "2026-09-08",
+      "base_component": "L-6290D",
+      "components": [
+        {
+          "name": "L-6290D",
+          "ratio": 99,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "BAPO",
+          "ratio": 1,
+          "role": "initiator",
+          "step": 1,
+          "note": "IPA数滴で溶いてから湯煎した6290Dに混ぜる"
+        }
+      ],
+      "notes": "Tg判定用型流し試験片。冷凍庫で曲がれば衝撃改質剤の資格あり→B-6へ"
     },
     {
       "id": "B-1",

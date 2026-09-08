@@ -24,6 +24,7 @@ npm run dev        # http://localhost:5173/
 - `npm run build` … `dist/` に本番ビルド (GitHub Pages 用に base=/resin-mixer/)
 - `npm run preview` … 本番ビルドをローカル確認 (Service Worker の動作確認はこちらで)
 - `node scripts/make-icons.mjs` … PWA アイコン PNG を再生成 (通常は不要)
+- `npx vite-node scripts/preview-steps.ts` … 全レシピの手順文言をコンソールに出力 (レシピ追加時の確認用)
 
 スマホから開発中の画面を見るには `npm run dev -- --host` で LAN 公開する。
 
