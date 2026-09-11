@@ -46,6 +46,10 @@ export const ROLE_LABEL: Record<string, string> = {
   crosslinker: '架橋剤',
   initiator: '開始剤',
   blocker: 'ブロッカー',
+  stabilizer: '安定剤',
+  additive: '添加剤',
+  dye: '染料',
+  pigment: '顔料',
 }
 
 export function roleLabel(role: string): string {
