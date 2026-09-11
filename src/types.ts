@@ -1,6 +1,6 @@
 export type Role = 'oligomer' | 'diluent' | 'crosslinker' | 'initiator' | 'blocker' | (string & {})
 
-export type RecipeStatus = 'active' | 'archived' | 'experimental'
+export type RecipeStatus = 'active' | 'candidate' | 'experimental' | 'archived'
 
 export interface Component {
   name: string
@@ -58,6 +58,7 @@ export function roleLabel(role: string): string {
 
 export const STATUS_LABEL: Record<RecipeStatus, string> = {
   active: '採用',
+  candidate: '候補',
   experimental: '試作',
   archived: '過去',
 }
@@ -68,4 +69,5 @@ export const PRINT_PROFILE_LABEL: Record<string, { label: string; unit: string }
   bottom_layers: { label: '底面層数', unit: '層' },
   bottom_exposure_s: { label: '底面露光', unit: 's' },
   rest_after_retract_s: { label: 'リトラクト後待機', unit: 's' },
+  exposure_basis: { label: '露光の根拠', unit: '' },
 }

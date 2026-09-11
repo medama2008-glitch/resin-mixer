@@ -17,6 +17,9 @@ describe('validateInput', () => {
     expect(r.ok).toBe(true)
     expect(r.recipes.map((x) => x.id)).toEqual(['B-3'])
   })
+  it('schema_version 2 も受け付ける', () => {
+    expect(validateInput({ schema_version: 2, recipes: [{ ...good, status: 'candidate' }] }).ok).toBe(true)
+  })
   it('単一レシピを受け付ける', () => {
     expect(validateInput(good).ok).toBe(true)
   })
@@ -24,7 +27,7 @@ describe('validateInput', () => {
     expect(validateInput([good]).ok).toBe(true)
   })
   it('schema_version 違いを報告する', () => {
-    const r = validateInput({ schema_version: 2, recipes: [good] })
+    const r = validateInput({ schema_version: 3, recipes: [good] })
     expect(r.ok).toBe(false)
     expect(r.errors[0]).toContain('schema_version')
   })

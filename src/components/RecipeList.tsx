@@ -34,7 +34,7 @@ export function RecipeList({ entries, remoteState, onRefresh }: Props) {
   const archived = entries.filter((e) => e.recipe.status === 'archived')
   const counts = entries.reduce<Record<RecipeStatus, number>>(
     (acc, e) => ((acc[e.recipe.status] += 1), acc),
-    { active: 0, experimental: 0, archived: 0 },
+    { active: 0, candidate: 0, experimental: 0, archived: 0 },
   )
 
   return (

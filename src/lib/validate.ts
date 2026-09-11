@@ -1,7 +1,9 @@
 import type { Recipe, RecipeFile } from '../types'
 
-export const SCHEMA_VERSION = 1
-const STATUSES = ['active', 'archived', 'experimental']
+export const SCHEMA_VERSION = 2
+/** 受け付ける schema_version。1 は candidate/exposure_basis 追加前の形式で互換 */
+export const ACCEPTED_SCHEMA_VERSIONS = [1, 2]
+const STATUSES = ['active', 'candidate', 'experimental', 'archived']
 
 export interface ValidationResult {
   ok: boolean
@@ -81,8 +83,8 @@ export function validateInput(data: unknown): ValidationResult {
       if (v) recipes.push(v)
     })
   } else if (isObj(data) && 'recipes' in data) {
-    if (data.schema_version !== SCHEMA_VERSION) {
-      errors.push(`schema_version が ${SCHEMA_VERSION} ではありません (${String(data.schema_version)})`)
+    if (typeof data.schema_version !== 'number' || !ACCEPTED_SCHEMA_VERSIONS.includes(data.schema_version)) {
+      errors.push(`schema_version が ${ACCEPTED_SCHEMA_VERSIONS.join(' / ')} ではありません (${String(data.schema_version)})`)
     }
     if (!Array.isArray(data.recipes)) errors.push('recipes が配列ではありません')
     else {
