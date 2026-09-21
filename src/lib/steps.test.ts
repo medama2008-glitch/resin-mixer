@@ -28,8 +28,13 @@ describe('buildSteps (受け入れ確認 2)', () => {
     expect(steps[0].text).toBe('ACMO 21.7 g を容器に取り、BAPO 1.09 g を少量ずつ加えて溶解')
     expect(steps[0].notes).toEqual(['BAPO: ACMO全量に溶解'])
   })
-  it('Step 2: 矢印で投入順', () => {
-    expect(steps[1].text).toBe('EO3-TMPTA 14.1 g → L-6105 5.11 g → 顔料(緑) 0.33 g を追加して撹拌')
+  it('Step 2: 先溶かし液の容器に加えることを明示し、先溶かし液を容器内の行として先頭に出す', () => {
+    expect(steps[1].text).toBe(
+      '先溶かし液 (ACMO+BAPO) の容器に EO3-TMPTA 14.1 g → L-6105 5.11 g → 顔料(緑) 0.33 g を追加して撹拌',
+    )
+    expect(steps[1].items[0].carried).toBe(true)
+    expect(steps[1].items[0].component.name).toBe('先溶かし液 (ACMO+BAPO)')
+    expect(steps[1].items[0].grams).toBeCloseTo(21 * (66.3 / 61), 6)
   })
   it('Step 3: 主剤合流', () => {
     expect(steps[2].text).toBe(

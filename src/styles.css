@@ -889,3 +889,14 @@ main {
   padding: 4px 0 6px 36px;
   font-size: 14px;
 }
+
+.step-items li.carried .comp-name,
+.step-items li.carried .grams {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.item-carried {
+  color: var(--muted);
+  font-size: 22px;
+}

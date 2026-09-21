@@ -6,6 +6,8 @@ export interface StepItem {
   grams: number
   /** カクテル容器内の累計(g)。主剤合流工程では undefined */
   cumulative?: number
+  /** 既に容器に入っている液 (前工程で作ったもの)。チェック対象外として表示 */
+  carried?: boolean
 }
 
 export type StepKind = 'dissolve' | 'cocktail' | 'merge' | 'generic'
@@ -49,6 +51,7 @@ export function buildSteps(recipe: Recipe, calc: Calculation): StepCard[] {
   const mergeStep = recipe.components.find((c) => c.name === recipe.base_component)?.step
 
   let cum = 0 // カクテル容器の累計
+  const containerNames: string[] = [] // カクテル容器に入っている成分名 (投入順)
   const cards: StepCard[] = []
   let prevCocktailStep: number | undefined
 
@@ -78,10 +81,13 @@ export function buildSteps(recipe: Recipe, calc: Calculation): StepCard[] {
 
     // 投入順: 開始剤以外 → 開始剤。累計を付ける
     const ordered = [...others, ...initiators]
+    const carriedGrams = cum // 前工程までに容器に入っている量
     for (const it of ordered) {
       cum += it.grams
       it.cumulative = cum
     }
+    const prevContainerNames = [...containerNames]
+    containerNames.push(...ordered.map((it) => it.component.name))
 
     if (step === firstStep && initiators.length > 0 && others.length > 0) {
       const text = `${joinPlus(others)} を容器に取り、${joinPlus(initiators)} を少量ずつ加えて溶解`
@@ -90,8 +96,16 @@ export function buildSteps(recipe: Recipe, calc: Calculation): StepCard[] {
       const text = `${joinArrow(ordered)} を容器に取り撹拌`
       cards.push({ step, title: '計量', text, items: ordered, notes, kind: 'generic' })
     } else {
-      const text = `${joinArrow(ordered)} を追加して撹拌`
-      cards.push({ step, title: 'モノマーカクテル', text, items: ordered, notes, kind: 'cocktail' })
+      // 前工程の液 (先溶かし液など) が入った容器に加える。前工程の成分名を明示する
+      const prev = cards[cards.length - 1]
+      const carriedName = `${prev.title}液 (${prevContainerNames.join('+')})`
+      const text = `${carriedName} の容器に ${joinArrow(ordered)} を追加して撹拌`
+      const carried: StepItem = {
+        component: { name: carriedName, ratio: 0, role: 'carried', step },
+        grams: carriedGrams,
+        carried: true,
+      }
+      cards.push({ step, title: 'モノマーカクテル', text, items: [carried, ...ordered], notes, kind: 'cocktail' })
     }
     prevCocktailStep = step
   }

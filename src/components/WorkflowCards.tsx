@@ -16,8 +16,10 @@ interface Props {
 export function WorkflowCards({ cards, renderMeasure }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({})
   const itemKeys = (c: WorkflowCard) => {
-    const withItems = c.items.length > 0 && c.kind !== 'measure'
-    return withItems ? c.items.map((it) => `${c.key}:${it.component.name}`) : [`${c.key}:_`]
+    const withItems = c.items.some((it) => !it.carried) && c.kind !== 'measure'
+    return withItems
+      ? c.items.filter((it) => !it.carried).map((it) => `${c.key}:${it.component.name}`)
+      : [`${c.key}:_`]
   }
   const setAll = (keys: string[], value: boolean) =>
     setChecked((prev) => {
@@ -59,6 +61,18 @@ export function WorkflowCards({ cards, renderMeasure }: Props) {
                 {c.items.map((it) => {
                   const key = `${c.key}:${it.component.name}`
                   const itemDone = !!checked[key]
+                  if (it.carried) {
+                    return (
+                      <li key={it.component.name} className="carried">
+                        <span className="item-check item-carried" aria-hidden="true">
+                          ↳
+                        </span>
+                        <span className="comp-name">{it.component.name}</span>
+                        <span className="comp-role">{roleLabel(it.component.role)}・そのまま</span>
+                        <span className="grams">{fmtGrams(it.grams)} g</span>
+                      </li>
+                    )
+                  }
                   return (
                     <li key={it.component.name} className={itemDone ? 'done' : ''}>
                       <label className="item-check">
