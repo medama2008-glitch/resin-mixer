@@ -27,7 +27,7 @@ describe('buildWorkflow', () => {
     expect(cards[1].text).toBe('湯煎の間に作る。ACMO 20.0 g を容器に取り、BAPO 1.00 g を少量ずつ加えて溶解')
     expect(cards[2].text).toBe('温まった L-6206 を 61.0 g 計量（微調整で目安に合わせる）')
     expect(cards[2].measure).toEqual({ plan: 61, measured: null, deviation: 0 })
-    expect(cards[3].text).toBe('先溶かし液 (ACMO+BAPO) の容器に EO3-TMPTA 13.0 g → L-6105 4.70 g → 顔料(緑) 0.30 g を追加して撹拌')
+    expect(cards[3].text).toBe('先溶かし液とは別の容器に EO3-TMPTA 13.0 g → L-6105 4.70 g → 顔料(緑) 0.30 g を取り撹拌（先溶かし液は撹拌を続ける）')
     expect(cards[4].text).toContain('L-6206 61.0 g')
   })
 
@@ -36,7 +36,7 @@ describe('buildWorkflow', () => {
     expect(cards[1].text).toContain('ACMO 20.0 g')
     expect(cards[2].measure!.deviation).toBeCloseTo(58 / 61 - 1, 9)
     expect(cards[2].notes[0]).toContain('-4.9%')
-    expect(cards[3].text).toBe('先溶かし液 (ACMO+BAPO) の容器に EO3-TMPTA 12.4 g → L-6105 4.47 g → 顔料(緑) 0.29 g を追加して撹拌')
+    expect(cards[3].text).toBe('先溶かし液とは別の容器に EO3-TMPTA 12.4 g → L-6105 4.47 g → 顔料(緑) 0.29 g を取り撹拌（先溶かし液は撹拌を続ける）')
     expect(cards[4].text).toContain('L-6206 58.0 g')
   })
 

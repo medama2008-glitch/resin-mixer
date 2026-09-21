@@ -28,22 +28,26 @@ describe('buildSteps (受け入れ確認 2)', () => {
     expect(steps[0].text).toBe('ACMO 21.7 g を容器に取り、BAPO 1.09 g を少量ずつ加えて溶解')
     expect(steps[0].notes).toEqual(['BAPO: ACMO全量に溶解'])
   })
-  it('Step 2: 先溶かし液の容器に加えることを明示し、先溶かし液を容器内の行として先頭に出す', () => {
+  it('Step 2: 先溶かし液とは別の容器で作る', () => {
     expect(steps[1].text).toBe(
-      '先溶かし液 (ACMO+BAPO) の容器に EO3-TMPTA 14.1 g → L-6105 5.11 g → 顔料(緑) 0.33 g を追加して撹拌',
+      '先溶かし液とは別の容器に EO3-TMPTA 14.1 g → L-6105 5.11 g → 顔料(緑) 0.33 g を取り撹拌（先溶かし液は撹拌を続ける）',
     )
-    expect(steps[1].items[0].carried).toBe(true)
-    expect(steps[1].items[0].component.name).toBe('先溶かし液 (ACMO+BAPO)')
-    expect(steps[1].items[0].grams).toBeCloseTo(21 * (66.3 / 61), 6)
   })
-  it('Step 3: 主剤合流', () => {
+  it('Step 3: 主剤合流で先溶かし液とカクテルを両方加える', () => {
     expect(steps[2].text).toBe(
-      'L-6206 66.3 g（40-50℃加温済み）にモノマーカクテルの液を全量注ぎ、ヘラで壁面をこそぎながら混合',
+      'L-6206 66.3 g（40-50℃加温済み）に 先溶かし液 (ACMO+BAPO) と モノマーカクテル (EO3-TMPTA+L-6105+顔料(緑)) を全量注ぎ、ヘラで壁面をこそぎながら混合',
     )
+    expect(steps[2].items.map((it) => it.component.name)).toEqual([
+      'L-6206',
+      '先溶かし液 (ACMO+BAPO)',
+      'モノマーカクテル (EO3-TMPTA+L-6105+顔料(緑))',
+    ])
+    expect(steps[2].items[1].grams).toBeCloseTo(21 * (66.3 / 61), 6)
+    expect(steps[2].items[2].grams).toBeCloseTo(18 * (66.3 / 61), 6)
   })
-  it('カクテル容器の累計が付く', () => {
-    const last = steps[1].items.at(-1)!
-    expect(last.cumulative).toBeCloseTo((20 + 1 + 13 + 4.7 + 0.3) * (66.3 / 61), 6)
+  it('累計は容器ごと', () => {
+    expect(steps[0].items.at(-1)!.cumulative).toBeCloseTo(21 * (66.3 / 61), 6)
+    expect(steps[1].items.at(-1)!.cumulative).toBeCloseTo(18 * (66.3 / 61), 6)
     expect(steps[2].items[0].cumulative).toBeUndefined()
   })
 })
@@ -58,9 +62,8 @@ describe('buildSteps: 複数オリゴマーのブレンド', () => {
   }
   it('合流工程の他のオリゴマーは加温せず合流後に追加', () => {
     const steps = buildSteps(r, calcFromBase(r, 61))
-    expect(steps[2].text).toBe(
-      'L-6206 61.0 g（40-50℃加温済み）にモノマーカクテルの液を全量注ぎ、ヘラで壁面をこそぎながら混合。さらに L-9999 10.0 g を追加して撹拌',
-    )
+    expect(steps[2].text).toContain('L-6206 61.0 g（40-50℃加温済み）に 先溶かし液 (ACMO+BAPO) と モノマーカクテル')
+    expect(steps[2].text).toContain('。さらに L-9999 10.0 g を追加して撹拌')
   })
   it('合流工程のオリゴマー以外は「さらに追加」', () => {
     const r2: Recipe = {

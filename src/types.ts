@@ -52,7 +52,7 @@ export const ROLE_LABEL: Record<string, string> = {
   additive: '添加剤',
   dye: '染料',
   pigment: '顔料',
-  carried: '容器内',
+  liquid: '合流',
 }
 
 export function roleLabel(role: string): string {
