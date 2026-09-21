@@ -26,6 +26,8 @@ export interface Recipe {
   base_component: string
   components: Component[]
   print_profile?: PrintProfile
+  /** 光学特性 (Dp, Ec など)。キーは自由 */
+  optics?: Record<string, number | string | boolean | null>
   notes?: string
 }
 
@@ -70,4 +72,14 @@ export const PRINT_PROFILE_LABEL: Record<string, { label: string; unit: string }
   bottom_exposure_s: { label: '底面露光', unit: 's' },
   rest_after_retract_s: { label: 'リトラクト後待機', unit: 's' },
   exposure_basis: { label: '露光の根拠', unit: '' },
+}
+
+export const OPTICS_LABEL: Record<string, { label: string; unit: string }> = {
+  Dp_um: { label: '浸透深さ Dp', unit: 'µm' },
+  Ec_s: { label: '臨界露光 Ec', unit: 's' },
+  E_for_Cd90um_s: { label: 'Cd=90µm の露光', unit: 's' },
+  n_exposures: { label: '測定条件数', unit: '' },
+  predicted: { label: '予測値', unit: '' },
+  source: { label: '出典', unit: '' },
+  note: { label: 'メモ', unit: '' },
 }

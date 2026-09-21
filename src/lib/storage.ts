@@ -38,19 +38,6 @@ export function saveRemoteCache(recipes: Recipe[]) {
   write(CACHE_KEY, recipes)
 }
 
-const MARGIN_KEY = 'resinmixer.premixMarginPct'
-export const DEFAULT_MARGIN_PCT = 5
-
-/** 先溶かし液の余裕率 (%)。既定 5 */
-export function loadMarginPct(): number {
-  const v = read<unknown>(MARGIN_KEY, DEFAULT_MARGIN_PCT)
-  return typeof v === 'number' && Number.isFinite(v) && v >= 0 ? v : DEFAULT_MARGIN_PCT
-}
-
-export function saveMarginPct(pct: number) {
-  write(MARGIN_KEY, pct)
-}
-
 const RESOLUTION_KEY = 'resinmixer.gramResolution'
 
 /** 表示単位。既定は 0.1 g (coarse) */

@@ -62,11 +62,9 @@ export function buildSteps(recipe: Recipe, calc: Calculation): StepCard[] {
     const others = items.filter((it) => it.component.role !== 'initiator')
 
     if (isMerge) {
-      // 合流工程のオリゴマーは主剤と一緒に加温済みとして扱う (複数オリゴマーのブレンド)
-      const isWarmed = (it: StepItem) =>
-        it.component.name === recipe.base_component || it.component.role === 'oligomer'
-      const bases = items.filter(isWarmed)
-      const extras = items.filter((it) => !isWarmed(it))
+      // 加温するのは主剤 (base_component) だけ。同じ工程の他成分は合流後に追加
+      const bases = items.filter((it) => it.component.name === recipe.base_component)
+      const extras = items.filter((it) => it.component.name !== recipe.base_component)
       let text = `${joinPlus(bases)}（40-50℃加温済み）`
       const prevTitle = cards.length > 0 ? cards[cards.length - 1].title : undefined
       text +=

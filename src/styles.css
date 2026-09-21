@@ -508,9 +508,12 @@ main {
 }
 
 .step-card.kind-prep,
-.step-card.kind-measure,
-.step-card.kind-adjust {
+.step-card.kind-split {
   border-left-color: var(--muted);
+}
+
+.step-card.kind-individual {
+  border-left-color: var(--ok);
 }
 
 .step-card.kind-measure {
@@ -814,4 +817,75 @@ main {
 
 .recipe-head .recipe-notes {
   color: var(--text);
+}
+
+/* ---- まとめて調合 ---- */
+.num-input-small {
+  min-height: 44px;
+  font-size: 20px;
+  max-width: 160px;
+}
+
+.check-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 44px;
+}
+
+.check-inline input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--accent);
+}
+
+.pick-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pick-list li {
+  border-top: 1px solid var(--border);
+  padding: 4px 0;
+}
+
+.pick-list li.on {
+  background: var(--base-row);
+}
+
+.pick-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+.pick-row input {
+  width: 26px;
+  height: 26px;
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.pick-id {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pick-base {
+  font-size: 13px;
+  margin-left: auto;
+}
+
+.pick-target {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0 6px 36px;
+  font-size: 14px;
 }

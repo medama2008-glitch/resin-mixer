@@ -66,6 +66,7 @@ function validateRecipe(r: unknown, path: string, errors: string[]): Recipe | nu
       }
     }
   }
+  if (r.optics !== undefined && !isObj(r.optics)) errors.push(`${path}.optics はオブジェクトが必要です`)
   if (r.notes !== undefined && typeof r.notes !== 'string') errors.push(`${path}.notes は文字列が必要です`)
   return errors.length === before ? (r as unknown as Recipe) : null
 }

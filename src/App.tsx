@@ -3,16 +3,18 @@ import { useRecipes } from './useRecipes'
 import { RecipeList } from './components/RecipeList'
 import { RecipeView } from './components/RecipeView'
 import { ImportView } from './components/ImportView'
+import { BatchView } from './components/BatchView'
 import { loadResolution, loadTheme, saveResolution, saveTheme, type ThemePref } from './lib/storage'
 import { setGramResolution, type GramResolution } from './lib/calc'
 
-type Route = { view: 'list' } | { view: 'recipe'; id: string } | { view: 'import' }
+type Route = { view: 'list' } | { view: 'recipe'; id: string } | { view: 'import' } | { view: 'batch' }
 
 function parseHash(hash: string): Route {
   const h = hash.replace(/^#/, '')
   const m = h.match(/^\/r\/(.+)$/)
   if (m) return { view: 'recipe', id: decodeURIComponent(m[1]) }
   if (h === '/import') return { view: 'import' }
+  if (h === '/batch') return { view: 'batch' }
   return { view: 'list' }
 }
 
@@ -80,6 +82,9 @@ export default function App() {
         </p>
       </div>
     )
+  } else if (route.view === 'batch') {
+    title = 'まとめて調合'
+    body = <BatchView entries={entries} resolution={resolution} onResolutionChange={changeResolution} />
   } else if (route.view === 'import') {
     title = 'インポート'
     body = <ImportView local={local} onImport={importRecipes} onRemove={removeLocal} />
@@ -100,6 +105,9 @@ export default function App() {
           </span>
         )}
         <h1 className="appbar-title">{title}</h1>
+        <a className={`appbar-btn ${route.view === 'batch' ? 'active' : ''}`} href="#/batch" aria-label="まとめて調合">
+          ⧉
+        </a>
         <a className={`appbar-btn ${route.view === 'import' ? 'active' : ''}`} href="#/import" aria-label="インポート">
           ⇩
         </a>
