@@ -19,8 +19,8 @@ export function PrintProfileCard({ recipe }: { recipe: Recipe }) {
               <div key={k}>
                 <dt>{meta?.label ?? k}</dt>
                 <dd>
-                  {String(v)}
-                  {meta?.unit ? ` ${meta.unit}` : ''}
+                  {v === null ? '未定' : String(v)}
+                  {meta?.unit && v !== null ? ` ${meta.unit}` : ''}
                 </dd>
               </div>
             )

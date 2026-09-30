@@ -16,7 +16,7 @@ export interface PrintProfile {
   bottom_exposure_s?: number
   layer_mm?: number
   rest_after_retract_s?: number
-  [key: string]: number | string | undefined
+  [key: string]: number | string | null | undefined
 }
 
 export interface Recipe {
@@ -72,6 +72,8 @@ export const PRINT_PROFILE_LABEL: Record<string, { label: string; unit: string }
   bottom_layers: { label: '底面層数', unit: '層' },
   bottom_exposure_s: { label: '底面露光', unit: 's' },
   rest_after_retract_s: { label: 'リトラクト後待機', unit: 's' },
+  lift_speed_mm_min: { label: 'リフト速度', unit: 'mm/min' },
+  retract_speed_mm_min: { label: 'リトラクト速度', unit: 'mm/min' },
   exposure_basis: { label: '露光の根拠', unit: '' },
 }
 

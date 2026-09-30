@@ -20,6 +20,9 @@ describe('validateInput', () => {
   it('schema_version 2 も受け付ける', () => {
     expect(validateInput({ schema_version: 2, recipes: [{ ...good, status: 'candidate' }] }).ok).toBe(true)
   })
+  it('print_profile の null (未定) を受け付ける', () => {
+    expect(validateInput({ ...good, print_profile: { exposure_s: null, layer_mm: 0.05 } }).ok).toBe(true)
+  })
   it('単一レシピを受け付ける', () => {
     expect(validateInput(good).ok).toBe(true)
   })

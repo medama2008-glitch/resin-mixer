@@ -60,8 +60,8 @@ function validateRecipe(r: unknown, path: string, errors: string[]): Recipe | nu
     if (!isObj(r.print_profile)) errors.push(`${path}.print_profile はオブジェクトが必要です`)
     else {
       for (const [k, v] of Object.entries(r.print_profile)) {
-        if (typeof v !== 'number' && typeof v !== 'string') {
-          errors.push(`${path}.print_profile.${k} は数値または文字列が必要です`)
+        if (typeof v !== 'number' && typeof v !== 'string' && v !== null) {
+          errors.push(`${path}.print_profile.${k} は数値・文字列・null のいずれかが必要です`)
         }
       }
     }

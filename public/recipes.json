@@ -1217,6 +1217,582 @@
         }
       ],
       "notes": "初代(青)。グリーン状態で高延性を確認(2.34/2.50/3.05kg)。撹拌不足の可能性があるためB-1aで再現検証。歴史的記録として保存"
+    },
+    {
+      "id": "L8-1",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 45,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 13,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 2,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度11.1%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 13,
+        "B_6290D": 0,
+        "C_BAPO": 2
+      },
+      "notes": "2^3完全実施 Run1: 6211D 13 / 6290D 0 / BAPO 2。6206は置換の結果(45)。=4FV(混ぜ直し)"
+    },
+    {
+      "id": "L8-2",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 40,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 18,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 2,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度11.1%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 18,
+        "B_6290D": 0,
+        "C_BAPO": 2
+      },
+      "notes": "2^3完全実施 Run2: 6211D 18 / 6290D 0 / BAPO 2。6206は置換の結果(40)。"
+    },
+    {
+      "id": "L8-3",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 40,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 13,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "L-6290D",
+          "ratio": 5,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 2,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度11.1%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 13,
+        "B_6290D": 5,
+        "C_BAPO": 2
+      },
+      "notes": "2^3完全実施 Run3: 6211D 13 / 6290D 5 / BAPO 2。6206は置換の結果(40)。=4FV6-5(調製済みがあれば流用)"
+    },
+    {
+      "id": "L8-4",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 35,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 18,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "L-6290D",
+          "ratio": 5,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 18,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 2,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度11.1%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 18,
+        "B_6290D": 5,
+        "C_BAPO": 2
+      },
+      "notes": "2^3完全実施 Run4: 6211D 18 / 6290D 5 / BAPO 2。6206は置換の結果(35)。"
+    },
+    {
+      "id": "L8-5",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 45,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 13,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 17,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 3,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度17.6%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 13,
+        "B_6290D": 0,
+        "C_BAPO": 3
+      },
+      "notes": "2^3完全実施 Run5: 6211D 13 / 6290D 0 / BAPO 3。6206は置換の結果(45)。"
+    },
+    {
+      "id": "L8-6",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 40,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 18,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 17,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 3,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度17.6%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 18,
+        "B_6290D": 0,
+        "C_BAPO": 3
+      },
+      "notes": "2^3完全実施 Run6: 6211D 18 / 6290D 0 / BAPO 3。6206は置換の結果(40)。"
+    },
+    {
+      "id": "L8-7",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 40,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 13,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "L-6290D",
+          "ratio": 5,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 17,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 3,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度17.6%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 13,
+        "B_6290D": 5,
+        "C_BAPO": 3
+      },
+      "notes": "2^3完全実施 Run7: 6211D 13 / 6290D 5 / BAPO 3。6206は置換の結果(40)。"
+    },
+    {
+      "id": "L8-8",
+      "status": "experimental",
+      "date": "2026-10-01",
+      "base_component": "L-6206",
+      "components": [
+        {
+          "name": "L-6206",
+          "ratio": 35,
+          "role": "oligomer",
+          "step": 3
+        },
+        {
+          "name": "L-6211D",
+          "ratio": 18,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "L-6290D",
+          "ratio": 5,
+          "role": "oligomer",
+          "step": 2
+        },
+        {
+          "name": "ACMO",
+          "ratio": 17,
+          "role": "diluent",
+          "step": 1
+        },
+        {
+          "name": "BAPO",
+          "ratio": 3,
+          "role": "initiator",
+          "step": 1,
+          "note": "ACMO全量に溶解(濃度17.6%)"
+        },
+        {
+          "name": "EO3-TMPTA",
+          "ratio": 13,
+          "role": "crosslinker",
+          "step": 2,
+          "note": "緑プレミックス20%の持ち込み1.2を含む"
+        },
+        {
+          "name": "L-6105",
+          "ratio": 8.7,
+          "role": "diluent",
+          "step": 2
+        },
+        {
+          "name": "顔料(緑)",
+          "ratio": 0.3,
+          "role": "blocker",
+          "step": 2,
+          "note": "EO3プレミックス経由"
+        }
+      ],
+      "print_profile": {
+        "exposure_s": null,
+        "bottom_layers": 4,
+        "bottom_exposure_s": 30,
+        "layer_mm": 0.05,
+        "rest_after_retract_s": 2,
+        "lift_speed_mm_min": "90/320",
+        "retract_speed_mm_min": "320/90",
+        "exposure_basis": "滴下で決める(Cd≈118µm)"
+      },
+      "design": {
+        "A_6211D": 18,
+        "B_6290D": 5,
+        "C_BAPO": 3
+      },
+      "notes": "2^3完全実施 Run8: 6211D 18 / 6290D 5 / BAPO 3。6206は置換の結果(35)。"
     }
   ],
   "updated": "2026-09-12",
