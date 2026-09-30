@@ -70,9 +70,9 @@ describe('buildWorkflow', () => {
     // 実測は無視される
     expect(res.cards[2].measure).toEqual({ plan: perBase, measured: null, deviation: 0 })
     // カクテル 18% × 1545 = 278.1 g は上限内なので 1 容器
-    expect(res.cards[3].text).toContain('EO3-TMPTA 200.9 g')
+    expect(res.cards[3].text).toContain(`EO3-TMPTA ${(1545 * 0.13).toFixed(1)} g`)
     expect(res.cards[4].title).toBe('主剤合流（3 容器）')
-    expect(res.cards[4].text).toContain('先溶かし液 (ACMO+BAPO) 108.2 g と モノマーカクテル (EO3-TMPTA+L-6105+顔料(緑)) 92.7 g')
+    expect(res.cards[4].text).toContain(`先溶かし液 (ACMO+BAPO) ${((1545 * 0.21) / 3).toFixed(1)} g と モノマーカクテル (EO3-TMPTA+L-6105+顔料(緑)) ${((1545 * 0.18) / 3).toFixed(1)} g`)
   })
 
   it('カクテルが上限を超えるときは A/B に分ける', () => {
