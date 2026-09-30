@@ -15,7 +15,7 @@ if (!v.ok) {
 }
 for (const r of v.recipes) {
   console.log(`\n=== ${r.id} (${r.status}) ===`)
-  const cards = buildWorkflow(r, { targetGrams: 100, measuredBase: null, margin: 0.05, premixActual: null })
+  const { cards } = buildWorkflow(r, { targetGrams: 100, measuredBase: null })
   cards.forEach((c, i) => {
     console.log(`${i + 1}. [${c.title}] ${c.text}`)
     for (const n of c.notes) console.log(`     note: ${n}`)

@@ -70,11 +70,26 @@ describe('buildBatch', () => {
       { recipe: FG10, targetGrams: 100 },
       { recipe: FG20, targetGrams: 50 },
     ])
-    const cards = buildBatchWorkflow(plan, null)
+    const { cards } = buildBatchWorkflow(plan, { measuredBase: null })
     expect(cards.map((c) => c.kind)).toEqual(['prep', 'dissolve', 'measure', 'cocktail', 'merge', 'split', 'individual', 'individual'])
     // 共通 = 58+18+2+13+7+1 = 99% → 99.0 + 49.5
-    expect(cards[5].text).toBe('共通ミックス（計 148.5 g）を 2 つの容器に分ける: B-4FG10 99.0 g / B-4FG20 49.5 g')
+    expect(cards[5].text).toBe('共通ミックス（計 148.5 g）から各レシピの容器に取り分ける: B-4FG10 99.0 g / B-4FG20 49.5 g')
     expect(cards[6].text).toBe('B-4FG10 の容器に L-6105 1.00 g を追加して撹拌')
     expect(cards[7].text).toBe('B-4FG20 の容器に 顔料(緑) 0.50 g を追加して撹拌')
+  })
+
+  it('余裕率を付けると共通ミックスを多めに作り、余りを表示する', () => {
+    const plan = buildBatch([
+      { recipe: FG10, targetGrams: 100 },
+      { recipe: FG20, targetGrams: 50 },
+    ])
+    const res = buildBatchWorkflow(plan, { measuredBase: null, splitMargin: 0.03 })
+    expect(res.marginApplied).toBe(true)
+    expect(res.totalGrams).toBeCloseTo(148.5 * 1.03, 9)
+    expect(res.leftover).toBeCloseTo(148.5 * 0.03, 9)
+    const split = res.cards.find((c) => c.kind === 'split')!
+    expect(split.text).toBe(
+      '共通ミックス（計 153.0 g、余裕込み）から各レシピの容器に取り分ける: B-4FG10 99.0 g / B-4FG20 49.5 g（余り 4.46 g）',
+    )
   })
 })

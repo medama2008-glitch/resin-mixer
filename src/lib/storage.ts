@@ -49,6 +49,33 @@ export function saveResolution(r: 'coarse' | 'fine') {
   write(RESOLUTION_KEY, r)
 }
 
+const CONTAINER_KEY = 'resinmixer.container.v1'
+
+export interface ContainerSettings {
+  /** 容器 1 つの上限 (mL) */
+  capacityMl: number
+  /** 液の密度 (g/mL)。mL → g の換算に使う */
+  density: number
+  /** 分けて入れるときの余裕 (%) */
+  marginPct: number
+}
+
+export const DEFAULT_CONTAINER: ContainerSettings = { capacityMl: 650, density: 1.1, marginPct: 3 }
+
+export function loadContainerSettings(): ContainerSettings {
+  const v = read<Partial<ContainerSettings>>(CONTAINER_KEY, {})
+  const num = (x: unknown, d: number) => (typeof x === 'number' && Number.isFinite(x) && x >= 0 ? x : d)
+  return {
+    capacityMl: num(v.capacityMl, DEFAULT_CONTAINER.capacityMl),
+    density: num(v.density, DEFAULT_CONTAINER.density) || DEFAULT_CONTAINER.density,
+    marginPct: num(v.marginPct, DEFAULT_CONTAINER.marginPct),
+  }
+}
+
+export function saveContainerSettings(c: ContainerSettings) {
+  write(CONTAINER_KEY, c)
+}
+
 export type ThemePref = 'auto' | 'light' | 'dark'
 
 export function loadTheme(): ThemePref {

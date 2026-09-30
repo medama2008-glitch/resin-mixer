@@ -11,6 +11,8 @@ import {
   type GramResolution,
 } from '../lib/calc'
 import { buildWorkflow } from '../lib/workflow'
+import { loadContainerSettings, saveContainerSettings, type ContainerSettings } from '../lib/storage'
+import { ContainerSettingsPanel } from './ContainerSettingsPanel'
 import { NumInput } from './NumInput'
 import { WorkflowCards } from './WorkflowCards'
 import { PrintProfileCard } from './PrintProfileCard'
@@ -28,6 +30,11 @@ export function RecipeView({ recipe, isLocal, resolution, onResolutionChange }: 
   const [tab, setTab] = useState<Tab>('calc')
   const [targetText, setTargetText] = useState('100')
   const [measuredText, setMeasuredText] = useState('')
+  const [container, setContainer] = useState<ContainerSettings>(() => loadContainerSettings())
+  const changeContainer = (c: ContainerSettings) => {
+    setContainer(c)
+    saveContainerSettings(c)
+  }
 
   const base = findBase(recipe)
   const target = parseDecimal(targetText)
@@ -38,11 +45,17 @@ export function RecipeView({ recipe, isLocal, resolution, onResolutionChange }: 
     () => (usingMeasured ? calcFromBase(recipe, measured) : calcFromTarget(recipe, target ?? 0)),
     [recipe, usingMeasured, measured, target],
   )
-  const cards = useMemo(
-    () => buildWorkflow(recipe, { targetGrams: target ?? 0, measuredBase: usingMeasured ? measured : null }),
+  const flow = useMemo(
+    () =>
+      buildWorkflow(recipe, {
+        targetGrams: target ?? 0,
+        measuredBase: usingMeasured ? measured : null,
+        capacityGrams: container.capacityMl * container.density,
+        splitMargin: container.marginPct / 100,
+      }),
     // resolution は文言中の数値の丸めに効くので依存に含める
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [recipe, target, usingMeasured, measured, resolution],
+    [recipe, target, usingMeasured, measured, resolution, container],
   )
   const plannedBase = base && target ? calcFromTarget(recipe, target).amounts.find((a) => a.isBase)?.grams : undefined
 
@@ -147,8 +160,15 @@ export function RecipeView({ recipe, isLocal, resolution, onResolutionChange }: 
         </table>
       ) : (
         <div className="steps">
+          <ContainerSettingsPanel
+            settings={container}
+            onChange={changeContainer}
+            containers={flow.containers}
+            totalGrams={flow.totalGrams}
+            marginApplied={flow.marginApplied}
+          />
           <WorkflowCards
-            cards={cards}
+            cards={flow.cards}
             renderMeasure={(c) => (
               <MeasureField
                 plan={c.measure?.plan ?? 0}

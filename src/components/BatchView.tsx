@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react'
 import type { RecipeEntry } from '../types'
 import { STATUS_LABEL, roleLabel } from '../types'
 import { fmtGrams, fmtNum, parseDecimal, type GramResolution } from '../lib/calc'
-import { buildBatch, buildBatchWorkflow, masterBasePlan } from '../lib/batch'
+import { buildBatch, buildBatchWorkflow } from '../lib/batch'
+import { loadContainerSettings, saveContainerSettings, type ContainerSettings } from '../lib/storage'
+import { ContainerSettingsPanel } from './ContainerSettingsPanel'
 import { NumInput } from './NumInput'
 import { WorkflowCards } from './WorkflowCards'
 import { MeasureField, ResolutionToggle } from './RecipeView'
@@ -21,6 +23,11 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
   const [targets, setTargets] = useState<Record<string, string>>({})
   const [measuredText, setMeasuredText] = useState('')
   const [showArchived, setShowArchived] = useState(false)
+  const [container, setContainer] = useState<ContainerSettings>(() => loadContainerSettings())
+  const changeContainer = (c: ContainerSettings) => {
+    setContainer(c)
+    saveContainerSettings(c)
+  }
 
   const candidates = entries.filter((e) => showArchived || e.recipe.status !== 'archived')
   const chosen = entries.filter((e) => selected[e.recipe.id])
@@ -32,14 +39,19 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
   const measuredBase = measured !== null && measured > 0 ? measured : null
 
   const plan = useMemo(() => buildBatch(inputs), [inputs])
-  const cards = useMemo(
-    () => buildBatchWorkflow(plan, measuredBase),
+  const flow = useMemo(
+    () =>
+      buildBatchWorkflow(plan, {
+        measuredBase,
+        capacityGrams: container.capacityMl * container.density,
+        splitMargin: container.marginPct / 100,
+      }),
     // resolution は丸めに効く
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [plan, measuredBase, resolution],
+    [plan, measuredBase, resolution, container],
   )
-  const basePlan = plan.errors.length === 0 ? masterBasePlan(plan) : 0
-  const scale = measuredBase !== null && basePlan > 0 ? measuredBase / basePlan : 1
+  const scale = flow.scale
+  const made = flow.totalGrams * scale
 
   return (
     <div className="page">
@@ -106,14 +118,22 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
           <div className="card inputs">
             <div className="summary">
               <span>
-                共通ミックス <strong>{fmtGrams(plan.masterTotal * scale)}</strong> g
+                共通ミックス <strong>{fmtGrams(made)}</strong> g
+                {flow.marginApplied && <span className="muted">（必要 {fmtGrams(plan.masterTotal)} g + 余裕）</span>}
               </span>
               <span>
                 共通率 <strong>{fmtNum(plan.sharedFraction * 100, 1)}</strong> %
               </span>
-              {measuredBase !== null && <span className="badge badge-measured">実測基準</span>}
+              {scale !== 1 && <span className="badge badge-measured">実測基準</span>}
               <ResolutionToggle resolution={resolution} onChange={onResolutionChange} />
             </div>
+            <ContainerSettingsPanel
+              settings={container}
+              onChange={changeContainer}
+              containers={flow.containers}
+              totalGrams={flow.totalGrams}
+              marginApplied={flow.marginApplied}
+            />
           </div>
 
           {tab === 'plan' ? (
@@ -141,7 +161,7 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
                           </div>
                         </td>
                         <td className="num muted">{fmtNum(c.ratio, 2)}</td>
-                        <td className="num grams">{fmtGrams((plan.masterTotal * scale * c.ratio) / sum)}</td>
+                        <td className="num grams">{fmtGrams((made * c.ratio) / sum)}</td>
                       </tr>
                     )
                   })}
@@ -154,13 +174,13 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
                   <div key={p.recipe.id} className="card">
                     <div className="recipe-card-head">
                       <span className="recipe-id">{p.recipe.id}</span>
-                      <span className="muted">目標 {fmtGrams(p.targetGrams * scale)} g</span>
+                      <span className="muted">目標 {fmtGrams(p.targetGrams)} g</span>
                     </div>
                     <ul className="step-items">
                       <li>
                         <span className="comp-name">共通ミックス</span>
                         <span className="comp-role">分注</span>
-                        <span className="grams">{fmtGrams(p.masterGrams * scale)} g</span>
+                        <span className="grams">{fmtGrams(p.masterGrams)} g</span>
                       </li>
                       {p.additions.map((a) => (
                         <li key={a.component.name}>
@@ -168,7 +188,7 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
                           <span className="comp-role">
                             {roleLabel(a.component.role)} ・ 追加
                           </span>
-                          <span className="grams">{fmtGrams(a.grams * scale)} g</span>
+                          <span className="grams">{fmtGrams(a.grams)} g</span>
                         </li>
                       ))}
                     </ul>
@@ -180,7 +200,7 @@ export function BatchView({ entries, resolution, onResolutionChange }: Props) {
           ) : (
             <div className="steps">
               <WorkflowCards
-                cards={cards}
+                cards={flow.cards}
                 renderMeasure={(c) => (
                   <MeasureField
                     plan={c.measure?.plan ?? 0}

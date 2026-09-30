@@ -21,7 +21,9 @@ beforeAll(() => setGramResolution('fine'))
 
 describe('buildWorkflow', () => {
   it('目安どおり: 準備→先溶かし→主剤計量→カクテル→合流', () => {
-    const cards = buildWorkflow(B2, { targetGrams: 100, measuredBase: null })
+    const { cards, containers, marginApplied } = buildWorkflow(B2, { targetGrams: 100, measuredBase: null })
+    expect(containers).toBe(1)
+    expect(marginApplied).toBe(false)
     expect(cards.map((c) => c.kind)).toEqual(['prep', 'dissolve', 'measure', 'cocktail', 'merge'])
     expect(cards[0].text).toBe('L-6206 を小分けして湯煎 (40-50℃)。目安 61.0 g')
     expect(cards[1].text).toBe('湯煎の間に作る。ACMO 20.0 g を容器に取り、BAPO 1.00 g を少量ずつ加えて溶解')
@@ -32,7 +34,7 @@ describe('buildWorkflow', () => {
   })
 
   it('実測 58: 先溶かしは計画量のまま、カクテル以降は実測基準、ずれの注意が付く', () => {
-    const cards = buildWorkflow(B2, { targetGrams: 100, measuredBase: 58 })
+    const { cards } = buildWorkflow(B2, { targetGrams: 100, measuredBase: 58 })
     expect(cards[1].text).toContain('ACMO 20.0 g')
     expect(cards[2].measure!.deviation).toBeCloseTo(58 / 61 - 1, 9)
     expect(cards[2].notes[0]).toContain('-4.9%')
@@ -41,7 +43,7 @@ describe('buildWorkflow', () => {
   })
 
   it('1% 未満のずれは注意を出さない', () => {
-    const cards = buildWorkflow(B2, { targetGrams: 100, measuredBase: 61.3 })
+    const { cards } = buildWorkflow(B2, { targetGrams: 100, measuredBase: 61.3 })
     expect(cards[2].notes).toEqual([])
   })
 
@@ -50,7 +52,36 @@ describe('buildWorkflow', () => {
       ...B2,
       components: B2.components.map((c) => (c.name === 'BAPO' ? { ...c, step: 2 } : c)),
     }
-    const cards = buildWorkflow(r, { targetGrams: 100, measuredBase: null })
+    const { cards } = buildWorkflow(r, { targetGrams: 100, measuredBase: null })
     expect(cards.map((c) => c.kind)).toEqual(['generic', 'cocktail', 'merge'])
+  })
+
+  it('容器上限を超えると主剤を分けて湯煎し、余裕を上乗せする', () => {
+    // 1500 g, 上限 715 g (650 mL × 1.1), 余裕 3% → 1545 g を 3 容器
+    const res = buildWorkflow(B2, { targetGrams: 1500, measuredBase: 60, capacityGrams: 715, splitMargin: 0.03 })
+    expect(res.containers).toBe(3)
+    expect(res.marginApplied).toBe(true)
+    expect(res.totalGrams).toBeCloseTo(1545, 9)
+    expect(res.cards.map((c) => c.kind)).toEqual(['prep', 'dissolve', 'measure', 'cocktail', 'merge'])
+    const perBase = (1545 * 0.61) / 3
+    expect(res.cards[0].text).toBe(`L-6206 を 3 個の容器に ${perBase.toFixed(1)} g ずつ小分けして湯煎 (40-50℃)。合計 ${(1545 * 0.61).toFixed(1)} g`)
+    expect(res.cards[1].text).toContain('1 容器で一括')
+    expect(res.cards[1].text).toContain('ACMO 309.0 g')
+    // 実測は無視される
+    expect(res.cards[2].measure).toEqual({ plan: perBase, measured: null, deviation: 0 })
+    // カクテル 18% × 1545 = 278.1 g は上限内なので 1 容器
+    expect(res.cards[3].text).toContain('EO3-TMPTA 200.9 g')
+    expect(res.cards[4].title).toBe('主剤合流（3 容器）')
+    expect(res.cards[4].text).toContain('先溶かし液 (ACMO+BAPO) 108.2 g と モノマーカクテル (EO3-TMPTA+L-6105+顔料(緑)) 92.7 g')
+  })
+
+  it('カクテルが上限を超えるときは A/B に分ける', () => {
+    const res = buildWorkflow(B2, { targetGrams: 3000, measuredBase: null, capacityGrams: 300, splitMargin: 0 })
+    expect(res.containers).toBe(10)
+    const titles = res.cards.map((c) => c.title)
+    expect(titles.filter((t) => t.startsWith('モノマーカクテル')).length).toBe(2) // 540 g → 2 容器
+    expect(titles).toContain('モノマーカクテル A')
+    expect(titles).toContain('モノマーカクテル B')
+    expect(res.cards.at(-1)!.text).toContain('カクテルは A/B から取り分ける')
   })
 })

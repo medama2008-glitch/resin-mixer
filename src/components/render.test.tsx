@@ -32,7 +32,7 @@ describe('画面のスモーク描画', () => {
     expect(pick.length).toBe(3)
     const plan = buildBatch(pick.map((r) => ({ recipe: r, targetGrams: 100 })))
     expect(plan.errors).toEqual([])
-    const html = renderToString(<WorkflowCards cards={buildBatchWorkflow(plan, null)} />)
+    const html = renderToString(<WorkflowCards cards={buildBatchWorkflow(plan, { measuredBase: null }).cards} />)
     expect(html).toContain('分注')
     expect(html).toContain('個別追加 B-4FG20')
   })

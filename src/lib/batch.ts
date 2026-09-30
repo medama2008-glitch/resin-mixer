@@ -1,6 +1,6 @@
 import type { Component, Recipe } from '../types'
 import { fmtGrams, ratioSum } from './calc'
-import { buildWorkflow, type WorkflowCard } from './workflow'
+import { buildWorkflow, type WorkflowResult } from './workflow'
 
 export interface BatchInput {
   recipe: Recipe
@@ -100,22 +100,52 @@ function emptyMaster(): Recipe {
   return { id: '共通ミックス', status: 'experimental', base_component: '', components: [] }
 }
 
-/** 共通ミックスの手順 + 分注 + 個別追加 をカードにする */
-export function buildBatchWorkflow(plan: BatchPlan, measuredBase: number | null): WorkflowCard[] {
-  if (plan.errors.length > 0) return []
-  const scale = measuredBase !== null && measuredBase > 0 ? measuredBase / masterBasePlan(plan) : 1
-  const cards = buildWorkflow(plan.master, { targetGrams: plan.masterTotal, measuredBase })
-  const splitText = plan.perRecipe.map((p) => `${p.recipe.id} ${fmtGrams(p.masterGrams * scale)} g`).join(' / ')
+export interface BatchWorkflowOptions {
+  measuredBase: number | null
+  capacityGrams?: number
+  splitMargin?: number
+}
+
+export interface BatchWorkflowResult extends WorkflowResult {
+  /** 実測入力による倍率 (容器 1 つのときのみ。それ以外は 1) */
+  scale: number
+  /** 分注後に余る共通ミックス (g) */
+  leftover: number
+}
+
+/** 共通ミックスの手順 + 分注 + 個別追加 をカードにする。分注するので余裕率は常に上乗せする */
+export function buildBatchWorkflow(plan: BatchPlan, opts: BatchWorkflowOptions): BatchWorkflowResult {
+  if (plan.errors.length > 0) return { cards: [], containers: 1, totalGrams: 0, marginApplied: false, scale: 1, leftover: 0 }
+  const res = buildWorkflow(plan.master, {
+    targetGrams: plan.masterTotal,
+    measuredBase: opts.measuredBase,
+    capacityGrams: opts.capacityGrams,
+    splitMargin: opts.splitMargin,
+    alwaysMargin: true,
+  })
+  const measurePlan = res.cards.find((c) => c.kind === 'measure')?.measure?.plan ?? 0
+  const scale =
+    res.containers === 1 && opts.measuredBase !== null && opts.measuredBase > 0 && measurePlan > 0
+      ? opts.measuredBase / measurePlan
+      : 1
+  const made = res.totalGrams * scale
+  const need = plan.perRecipe.reduce((s, p) => s + p.masterGrams, 0)
+  const leftover = made - need
+  const cards = [...res.cards]
+  const splitText = plan.perRecipe.map((p) => `${p.recipe.id} ${fmtGrams(p.masterGrams)} g`).join(' / ')
+  const from = res.containers > 1 ? `${res.containers} 容器の共通ミックス` : '共通ミックス'
   cards.push({
     key: 'split',
     title: '分注',
-    text: `共通ミックス（計 ${fmtGrams(plan.masterTotal * scale)} g）を ${plan.perRecipe.length} つの容器に分ける: ${splitText}`,
+    text:
+      `${from}（計 ${fmtGrams(made)} g${res.marginApplied ? '、余裕込み' : ''}）から各レシピの容器に取り分ける: ${splitText}` +
+      (leftover > 0.005 ? `（余り ${fmtGrams(leftover)} g）` : ''),
     items: [],
     notes: [],
     kind: 'split',
   })
   for (const p of plan.perRecipe) {
-    const items = p.additions.map((a) => ({ component: a.component, grams: a.grams * scale }))
+    const items = p.additions.map((a) => ({ component: a.component, grams: a.grams }))
     const text =
       items.length === 0
         ? `${p.recipe.id}: 追加なし（共通ミックスのまま）`
@@ -129,11 +159,5 @@ export function buildBatchWorkflow(plan: BatchPlan, measuredBase: number | null)
       kind: 'individual',
     })
   }
-  return cards
-}
-
-export function masterBasePlan(plan: BatchPlan): number {
-  const base = plan.master.components.find((c) => c.name === plan.master.base_component)
-  const sum = ratioSum(plan.master)
-  return base && sum > 0 ? (plan.masterTotal * base.ratio) / sum : 0
+  return { ...res, cards, scale, leftover }
 }
